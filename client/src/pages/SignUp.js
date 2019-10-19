@@ -1,69 +1,88 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, { Component } from "react";
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import "./Sign.css";
+import API from "../utils/API";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+class SignUp extends Component {
+  state = {
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: ""
+  };
 
-export default function SignUp() {
-  const classes = useStyles();
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
 
+  handleFormSubmit = event => {
+    event.preventDefault();
+    console.log(this.state.email + this.state.password);
+    if (this.state.email && this.state.password && this.state.firstName && this.state.lastName) {
+      API.signUp({
+        email: this.state.email,
+        password: this.state.password,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
+      })
+      .then(res => {
+        console.log(res)
+        if (res.data.pass === 200){
+          this.setState({
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+          });
+        }
+        else if (res.data.pass === 401){
+          alert("User Already Exists");
+          this.setState({
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+          });
+        }
+        else if (res.data.pass === 400){
+          console.log(res);
+          alert(res.data.error)
+          this.setState({
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: "",
+          });
+        }
+      })
+        .catch(err => console.log(err));
+      }
+    else {
+      alert("Please entire all fields");
+    }
+  };
+
+  render() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
+      <div className="paper">
+        <form className="form" noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={this.state.firstName}
+                onChange={this.handleInputChange}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -76,6 +95,8 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={this.state.lastName}
+                onChange={this.handleInputChange}
                 variant="outlined"
                 required
                 fullWidth
@@ -87,6 +108,8 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={this.state.email}
+                onChange={this.handleInputChange}
                 variant="outlined"
                 required
                 fullWidth
@@ -98,6 +121,8 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={this.state.password}
+                onChange={this.handleInputChange}
                 variant="outlined"
                 required
                 fullWidth
@@ -114,7 +139,8 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className="submit"
+            onClick={this.handleFormSubmit}
           >
             Sign Up
           </Button>
@@ -128,9 +154,10 @@ export default function SignUp() {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
       </Box>
     </Container>
   );
 }
+};
 
+export default SignUp;

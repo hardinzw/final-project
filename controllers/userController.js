@@ -5,15 +5,16 @@ const bcrypt = require("bcrypt");
 // Defining methods for the booksController
 module.exports = {
   signIn: async (req, res) => {
-  
   //find an existing user
   let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("User Not Found");
-
+  if (!user) return res.send({
+    pass: 401,
+    });
   bcrypt.compare(req.body.password, user.password, function (err, result) {
     if (result == true) {
     const token = user.generateAuthToken();
     res.header("x-auth-token", token).send({
+    pass: 200,
     _id: user._id,
     firstName: user.firstName,
     lastName: user.lastName,
@@ -22,7 +23,9 @@ module.exports = {
     // res.send(user, token);
   // res.redirect('/home');
   } else {
-    res.send('Incorrect password');
+    res.send({
+      pass: 400,
+      });
   //  res.redirect('/');
           }
       }); 
@@ -31,11 +34,13 @@ module.exports = {
   signUp: async ( req, res) => {
     // validate the request body first
     const { error } = validate(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.send({
+      pass: 400, 
+      error: error.details[0].message});
   
     //find an existing user
     let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send("User already registered.");
+    if (user) return res.send({pass: 401});
   
     user = new User({
       firstName: req.body.firstName,
@@ -48,6 +53,7 @@ module.exports = {
   
     const token = user.generateAuthToken();
     res.header("x-auth-token", token).send({
+      pass: 200,
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,

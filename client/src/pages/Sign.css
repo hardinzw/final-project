@@ -1,15 +1,13 @@
-.body {
-    background-color: white;
+body {
+    background-image: url("high-line.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     }
 .paper {
-    margin-Top: 8px;
+    padding-top: 150px;
     display: 'flex';
     flex-direction: 'column';
     align-items: 'center';
-    }
-.avatar {
-    margin: 1px;
-    background-color: royalblue;
     }
 .form {
       width: '100%';
