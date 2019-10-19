@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,12 +7,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import API from "../utils/API";
-import "./SignIn.css";
+import "./Sign.css";
+import { useHistory } from "react-router-dom";
 
-class SignIn extends Component {
+class SignIn extends React.Component {
   state = {
     email: "",
     password: ""
@@ -28,15 +27,33 @@ class SignIn extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    console.log(this.state.email + this.state.password);
     if (this.state.email && this.state.password) {
       API.signIn({
         email: this.state.email,
-        password: this.state.password,
+        password: this.state.password
       })
-        .then(res => alert("Sign In Succesful!"))
-        .catch(err => console.log(err));
-    }
+        .then(res => {
+          if (res.data.pass === 200){
+            this.setState({
+              email: "",
+              password: ""
+            });
+          }
+          else if (res.data.pass === 401){
+            alert("User not Found");
+            this.setState({
+              email: "",
+              password: ""
+            });
+          }
+          else if (res.data.pass === 400){
+            alert("Incorrect Password")
+            this.setState({
+              password: ""
+            });
+          }
+        })
+        }
   };
 
   render() {
@@ -44,13 +61,10 @@ class SignIn extends Component {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className="paper">
-        <Avatar className="avatar">
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
         <form className="form" noValidate>
           <TextField
+            value={this.state.email}
+            onChange={this.handleInputChange}
             variant="outlined"
             margin="normal"
             required
@@ -62,6 +76,8 @@ class SignIn extends Component {
             autoFocus
           />
           <TextField
+            value={this.state.password}
+            onChange={this.handleInputChange}
             variant="outlined"
             margin="normal"
             required
@@ -82,14 +98,12 @@ class SignIn extends Component {
             variant="contained"
             color="primary"
             className="submit"
+            onClick={this.handleFormSubmit}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
             </Grid>
             <Grid item>
               <Link href="/signup" variant="body2">
