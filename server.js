@@ -3,7 +3,13 @@ const mongoose = require("mongoose");
 const routes = require("./routes");
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3003;
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 //use config module to get the privatekey, if no private key set, end the application
 if (!config.get("myprivatekey")) {
@@ -22,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 //connect to mongodb
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/nodejsauth", { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/nodejsauth")
   .then(() => console.log("Connected to MongoDB..."))
   .catch(err => console.error("Could not connect to MongoDB..."));
 

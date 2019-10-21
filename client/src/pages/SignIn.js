@@ -10,12 +10,13 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import API from "../utils/API";
 import "./Sign.css";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-class SignIn extends React.Component {
+class SignIn extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    redirect: false
   };
 
   handleInputChange = event => {
@@ -36,7 +37,8 @@ class SignIn extends React.Component {
           if (res.data.pass === 200){
             this.setState({
               email: "",
-              password: ""
+              password: "",
+              redirect: true
             });
           }
           else if (res.data.pass === 401){
@@ -57,6 +59,12 @@ class SignIn extends React.Component {
   };
 
   render() {
+
+  const {redirect} = this.state;
+    if(redirect){
+      return <Redirect to="/signUp"/>
+    }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
