@@ -15,7 +15,8 @@ class SignUp extends Component {
     email: "",
     password: "",
     firstName: "",
-    lastName: ""
+    lastName: "",
+    redirect: false
   };
 
   handleInputChange = event => {
@@ -43,6 +44,7 @@ class SignUp extends Component {
             password: "",
             firstName: "",
             lastName: "",
+            redirect: true
           });
         }
         else if (res.data.pass === 401){
@@ -73,6 +75,12 @@ class SignUp extends Component {
   };
 
   render() {
+   
+    const {redirect} = this.state;
+    if(redirect){
+      return <Redirect to="/REPLACEME!!!"/>
+    }
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
