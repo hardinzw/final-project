@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import "./Sign.css";
 import API from "../utils/API";
+import { Redirect } from "react-router-dom";
 
 
 class SignUp extends Component {
@@ -78,7 +79,7 @@ class SignUp extends Component {
    
     const {redirect} = this.state;
     if(redirect){
-      return <Redirect to="/REPLACEME!!!"/>
+      return <Redirect to="/movies"/>
     }
   
   return (

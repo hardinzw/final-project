@@ -1,0 +1,28 @@
+.container {
+    height: 500px;
+}
+
+h3, h4 {
+    text-transform: uppercase
+}
+
+.backdrop { 
+    position: absolute;
+    z-index: -1;
+    opacity: .5; /* Tone the image down further by giving it transparency */
+    filter: blur(2px) grayscale(30%); /* Go wild! */}
+
+.media-info {
+    width: 27%;
+    display: inline-table;
+    margin-left: 1%;
+    margin-top: 3%;
+    position: static;
+}
+
+.media-poster {
+    display: inline-table;
+    margin-top: 4%;
+    margin-left: 2%;
+    position: static;
+}
