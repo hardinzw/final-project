@@ -13,8 +13,8 @@ app.use(function (req, res, next) {
 
 //use config module to get the privatekey, if no private key set, end the application
 if (!config.get("myprivatekey")) {
-  console.error("FATAL ERROR: myprivatekey is not defined.");
-  process.exit(1);
+console.error("FATAL ERROR: myprivatekey is not defined.");
+process.exit(1);
 }
 
 // Define middleware here

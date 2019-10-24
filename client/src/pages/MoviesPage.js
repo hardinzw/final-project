@@ -9,7 +9,7 @@ class MoviesPage extends Component {
     super(props);
     this.state= {}
 
-    this.performSearch("Grandma's Boy");
+    this.performSearch("jaws");
   }
 
   searchHandler(event) {
@@ -20,7 +20,7 @@ class MoviesPage extends Component {
   }
 
   performSearch(searchTerm) {
-    const urlString = "https://api.themoviedb.org/3/search/movie?api_key=" + TMDB_API_KEY + "&query=" + searchTerm;
+    const urlString = "https://api.themoviedb.org/3/search/movie?api_key=670ce4fd89e289c48cab8e3e66610e09&query=" + searchTerm;
     $.ajax({
       url: urlString,
       success: (searchResults) => {

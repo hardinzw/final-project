@@ -6,7 +6,7 @@ class MovieRow extends React.Component {
         const url = "https://www.themoviedb.org/movie/" + this.props.movie.id;
         window.location.href = url;       
     }
-    
+
     render() {
         return <table key={this.props.movie.id}>
         <tbody> 
@@ -23,7 +23,7 @@ class MovieRow extends React.Component {
               <p>{this.props.movie.vote_average}/10</p>
               <h4>Available Streaming Options</h4>
               <input type="button" onClick={this.viewMovie.bind(this)} value="View"/>
-            </td>         
+            </td>       
           </tr>                    
         </tbody>
       </table>

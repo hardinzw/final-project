@@ -1,14 +1,15 @@
 import React from "react";
+import './style.css';
 
 
 const Headline = props => {
   return (
     <div className="headline">
       <h1>
-        React Media Streaming Service Search
+        Find Your Stream
       </h1>
       <h2>
-        Search for Media Available Across Various Streaming Services
+        Search for media availability across streaming services.
       </h2>
     </div>
   );
