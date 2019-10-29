@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 //connect to mongodb
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/nodejsauth")
+  .connect(process.env.MONGODB_URI || "mongodb://hardinzw:tyson4@ds141168.mlab.com:41168/heroku_rsxj0vlj")
   .then(() => console.log("Connected to MongoDB..."))
   .catch(err => console.error("Could not connect to MongoDB..."));
 

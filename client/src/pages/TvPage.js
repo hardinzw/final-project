@@ -9,7 +9,7 @@ class TvPage extends Component {
     super(props);
     this.state= {}
 
-    this.performSearch("Lost");
+    this.performSearch("");
   }
 
   searchHandler(event) {

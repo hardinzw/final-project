@@ -9,7 +9,7 @@ class MoviesPage extends Component {
     super(props);
     this.state= {}
 
-    this.performSearch("jaws");
+    this.performSearch("");
   }
 
   searchHandler(event) {
